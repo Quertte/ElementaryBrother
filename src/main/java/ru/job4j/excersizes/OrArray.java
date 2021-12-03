@@ -1,7 +1,5 @@
 package ru.job4j.excersizes;
 
-import java.util.Arrays;
-
 public class OrArray {
     public static int[] or(int[] left, int[] right) {
         int[] rsl = new int[left.length + right.length];
