@@ -7,18 +7,17 @@ public class DiffArray {
         if (right.length == 0) {
             return left;
         }
-        int[] rsl = left;
         int size = 0;
         sortArray(left);
         sortArray(right);
         for (int i = 0; i < left.length; i++) {
-            for (int j = 0; j < right.length; j++) {
-                if (left[i] != right[j]) {
-                    rsl[size++] = left[i];
+            for (int k : right) {
+                if (left[i] != k) {
+                    left[size++] = left[i];
                 }
             }
         }
-        return Arrays.copyOf(rsl, size);
+        return Arrays.copyOf(left, size);
     }
 
     static void sortArray(int[] a) {
