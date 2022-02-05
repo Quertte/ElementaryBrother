@@ -4,27 +4,36 @@ import java.util.Arrays;
 
 public class SymmetricDiff {
     public static int[] diff(int[] left, int[] right) {
-        if (right.length == 0) {
+        if (Arrays.equals(left, right)) {
+            return new int[0];
+        } else if (right.length == 0) {
             return left;
         } else if (left.length == 0) {
             return right;
-        } else if (Arrays.equals(left, right)) {
-            return new int[0];
         }
         int[] rsl = new int[left.length + right.length];
-        System.arraycopy(left, 0, rsl, 0, left.length);
-        System.arraycopy(right, 0, rsl, left.length, right.length);
         int size = 0;
-        sortArray(rsl);
-        int unique = countUniqueValues(rsl);
-        int[] result = new int[unique];
+        sortArray(left);
+        sortArray(right);
+        int l = 0;
+        int r = 0;
         for (int i = 0; i < rsl.length; i++) {
-            result[size++] = rsl[i];
-            while (i + 1 < rsl.length && rsl[i] != rsl[i + 1]) {
-                i++;
+            if (l < left.length && r < right.length) {
+                if (left[l] == right[r]) {
+                    l++;
+                    r++;
+                } else if (left[l] < right[r]) {
+                    rsl[size++] = left[l++];
+                } else if (left[l] > right[r]) {
+                    rsl[size++] = right[r++];
+                }
+            } else if (l < left.length) {
+                rsl[size++] = left[l++];
+            } else if (r < right.length) {
+                rsl[size++] = right[r++];
             }
         }
-        return result;
+        return Arrays.copyOf(rsl, size);
     }
 
     static void sortArray(int[] a) {
@@ -38,16 +47,5 @@ public class SymmetricDiff {
                 }
             }
         }
-    }
-
-    static int countUniqueValues(int[] a) {
-        int unique = a.length;
-        for (int i = 0; i < a.length; i++) {
-            while (i + 1 < a.length && a[i] == a[i + 1]) {
-                i++;
-                unique--;
-            }
-        }
-        return unique;
     }
 }
